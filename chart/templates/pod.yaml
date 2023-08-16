@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-hbf-reporter-crud
+  namespace: {{ .Release.Namespace }}
+  labels:
+    component: {{ .Release.Name }}-hbf-reporter-crud
+spec:
+  {{- with .Values.reporter }}
+  containers:
+  - name: hbf-reporter-crud
+    image: {{ .image.repository }}:{{ .image.tag }}
+    imagePullPolicy: {{ .image.pullPolicy }}
+    {{- with .securityContext | default $.Values.defaults.securityContext }}
+    securityContext:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+    ports:
+    - containerPort: {{ .ports.addressPort }}
+      name: {{ .ports.addressPortAlias }}
+    env:
+    - name: DATABASE_URL
+      value: postgresql://{{ .postgres.user }}:{{ .postgres.pwd }}@{{ .postgres.host }}:{{ .postgres.port }}/{{ .postgres.name }}?schema={{ .postgres.schema }}
+    - name: APP_PORT
+      value: "{{ .ports.addressPort | toString }}"
+  restartPolicy: {{ .restartPolicy }}
+  {{- end }}

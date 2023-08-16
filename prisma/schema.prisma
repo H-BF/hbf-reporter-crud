@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model launch {
+  uuid         String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  date         DateTime      @default(now())
+  pipeline     Int        @unique
+  fail_count   Int?
+  pass_count   Int?
+  duration     Int?
+  status       launch_status @default(create)
+  assertions   assertions[]
+  launch_error launch_error?
+}
+
+model launch_error {
+  uuid        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  launch_uuid String @unique @db.Uuid
+  message     String
+  launch      launch @relation(fields: [launch_uuid], references: [uuid])
+}
+
+model assertions {
+  uuid        String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  launch_uuid String           @db.Uuid
+  src_ip      String
+  src_port    Int
+  dst_ip      String
+  dst_port    Int
+  protocol    protocol
+  sg_from     String
+  sg_to       String
+  status      assertion_status
+  msg_err     String?
+  launch      launch           @relation(fields: [launch_uuid], references: [uuid])
+}
+
+enum assertion_status {
+  pass
+  fail
+}
+
+enum protocol {
+  tcp
+  udp
+}
+
+enum launch_status {
+  create
+  in_process
+  finish
+  error
+}

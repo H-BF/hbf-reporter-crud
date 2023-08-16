@@ -1,0 +1,23 @@
+reporter:
+  image:
+    pullPolicy: Never
+    repository: hbf-reporter-crud
+    tag: latest
+  ports:
+    addressPort: 9000
+    addressPortAlias: reporter
+  postgres:
+    host: 172.25.143.81
+    port: 5432
+    name: postgres
+    user: nkiver
+    pwd: nkiver
+    schema: report
+  restartPolicy: OnFailure
+
+service:
+  port: 9000
+  type: LoadBalancer
+
+defaults:
+  securityContext: {}
