@@ -12,6 +12,7 @@ CREATE TABLE "launch" (
     "uuid" UUID NOT NULL DEFAULT gen_random_uuid(),
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "pipeline" INTEGER NOT NULL,
+    "job" INTEGER NOT NULL,
     "fail_count" INTEGER,
     "pass_count" INTEGER,
     "duration" INTEGER,
@@ -34,9 +35,9 @@ CREATE TABLE "assertions" (
     "uuid" UUID NOT NULL DEFAULT gen_random_uuid(),
     "launch_uuid" UUID NOT NULL,
     "src_ip" TEXT NOT NULL,
-    "src_port" INTEGER NOT NULL,
+    "src_port" TEXT NOT NULL,
     "dst_ip" TEXT NOT NULL,
-    "dst_port" INTEGER NOT NULL,
+    "dst_port" TEXT NOT NULL,
     "protocol" "protocol" NOT NULL,
     "sg_from" TEXT NOT NULL,
     "sg_to" TEXT NOT NULL,
@@ -47,7 +48,7 @@ CREATE TABLE "assertions" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "launch_pipeline_key" ON "launch"("pipeline");
+CREATE UNIQUE INDEX "launch_pipeline_job_key" ON "launch"("pipeline", "job");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "launch_error_launch_uuid_key" ON "launch_error"("launch_uuid");

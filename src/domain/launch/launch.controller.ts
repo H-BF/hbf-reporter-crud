@@ -7,6 +7,7 @@ import { GetValidateMiddleware } from "../../common/middleware/get.validate.midd
 import { LaunchFindDto } from "./dto/launch.find.dto";
 import { LaunchUpdateDto } from "./dto/launch.update.dto";
 import { PostValidateMiddleware } from "../../common/middleware/post.validate.middleware";
+import { controllerMethodLogger } from "../../common/middleware/controller.logger.middleware";
 
 export class LaunchController extends BaseController {
 
@@ -17,24 +18,25 @@ export class LaunchController extends BaseController {
                 path: '/launch',
                 method: 'get',
                 func: this.getOneByUuid,
-                middlewares: [new GetValidateMiddleware(LaunchFindDto)]
+                middlewares: [controllerMethodLogger, new GetValidateMiddleware(LaunchFindDto)]
             },
             {
                 path: '/launch',
                 method: 'post',
                 func: this.create,
-                middlewares: [new PostValidateMiddleware(LaunchCreateDto)]
+                middlewares: [controllerMethodLogger, new PostValidateMiddleware(LaunchCreateDto)]
             },
             {
                 path: '/launch',
                 method: 'patch',
                 func: this.update,
-                middlewares: [new PostValidateMiddleware(LaunchUpdateDto)]
+                middlewares: [controllerMethodLogger, new PostValidateMiddleware(LaunchUpdateDto)]
             },
             {
                 path: '/launchs',
                 method: 'get',
-                func: this.getAll
+                func: this.getAll,
+                middlewares: [controllerMethodLogger]
             }
         ])
     }
@@ -74,7 +76,7 @@ export class LaunchController extends BaseController {
             }))
         }
     }
-
+    
     async getOneByUuid(req: Request, res: Response, next: NextFunction) {
         try {
             const uuid = req.query['uuid']!!.toString()
@@ -86,6 +88,5 @@ export class LaunchController extends BaseController {
                 msg: err.message
             }))
         }
-
     }
 }

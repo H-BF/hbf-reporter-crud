@@ -16,7 +16,7 @@ export class LaunchUpdateDto {
 
     @IsOptional()
     @IsNumber()
-    duratin?: number
+    duration?: number
 
 
     @IsOptional()

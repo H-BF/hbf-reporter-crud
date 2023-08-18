@@ -3,6 +3,8 @@ reporter:
     pullPolicy: Never
     repository: hbf-reporter-crud
     tag: latest
+  logLevel: DEBUG
+  logType: pretty
   ports:
     addressPort: 9000
     addressPortAlias: reporter

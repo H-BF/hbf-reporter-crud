@@ -6,6 +6,7 @@ import { LaunchErrorCreateDto } from "./dto/launch-error.create.dto";
 import { LaunchErrorFindDto } from "./dto/launch-error.find.dto";
 import { LaunchErrorService } from "./launch-error.service";
 import { HTTPError } from "../../errors/custom/http-error";
+import { controllerMethodLogger } from "../../common/middleware/controller.logger.middleware";
 
 export class LaunchErrorController extends BaseController {
 
@@ -16,18 +17,19 @@ export class LaunchErrorController extends BaseController {
                 path: '/launch_error',
                 method: 'post',
                 func: this.create,
-                middlewares: [new PostValidateMiddleware(LaunchErrorCreateDto)]
+                middlewares: [controllerMethodLogger, new PostValidateMiddleware(LaunchErrorCreateDto)]
             },
             {
                 path: '/launch_error',
                 method: 'get',
                 func: this.getByLaunchUuid,
-                middlewares: [new GetValidateMiddleware(LaunchErrorFindDto)]
+                middlewares: [controllerMethodLogger, new GetValidateMiddleware(LaunchErrorFindDto)]
             },
             {
                 path: '/launchs_error',
                 method: 'get',
-                func: this.getAll
+                func: this.getAll,
+                middlewares: [controllerMethodLogger]
             }
         ])
     }

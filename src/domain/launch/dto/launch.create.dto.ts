@@ -4,4 +4,7 @@ export class LaunchCreateDto {
 
     @IsNumber()
     pipeline!: string;
+
+    @IsNumber()
+    job!: string;
 }

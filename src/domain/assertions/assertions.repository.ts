@@ -43,9 +43,9 @@ export class AssertionsRepository implements IAssertionsRepository {
         let data: any = {}
         if (assertion.launchUuid != undefined) { data.launch_uuid = assertion.launchUuid }
         if (assertion.srcIp != undefined) { data.src_ip = assertion.srcIp }
-        if (assertion.srcPort != undefined) { data.src_port = Number(assertion.srcPort) }
+        if (assertion.srcPort != undefined) { data.src_port = assertion.srcPort }
         if (assertion.dstIp != undefined) { data.dst_ip = assertion.dstIp }
-        if (assertion.dstPort != undefined) { data.dst_port = Number(assertion.dstPort) }
+        if (assertion.dstPort != undefined) { data.dst_port = assertion.dstPort }
         if (assertion.protocol != undefined) { data.protocol = assertion.protocol }
         if (assertion.sgFrom != undefined) { data.sg_from = assertion.sgFrom }
         if (assertion.sgTo != undefined) { data.sg_to = assertion.sgTo }

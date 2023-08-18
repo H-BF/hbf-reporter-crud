@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { logger } from "../common/logger/logger.service";
 
 export class PrismaService {
 
@@ -10,9 +11,9 @@ export class PrismaService {
 
     async connect(): Promise<void> {
         await this.client.$connect().then(() => {
-            console.log('✅ PostgreSQL Connection has been established successfully.')
+            logger.info('✅ PostgreSQL Connection has been established successfully.')
         }).catch(err => {
-            console.error("❌ Unable to connect to the PostgreSQL database:", err)
+            logger.err(`❌ Unable to connect to the PostgreSQL database: ${err}`)
             process.exit(1)
         })
     }

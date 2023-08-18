@@ -18,7 +18,7 @@ export class AssertionsFindWhereDto {
         return !obj.launchUUID && !obj.srcIp && !obj.dstIp && !obj.dstPort && !obj.protocol && !obj.sgFrom && !obj.sgTo && !obj.status && !obj.msgErr;
     })
     @IsString()
-    srcPort?: number;
+    srcPort?: string;
 
     @ValidateIf((obj) => {
         return !obj.launchUUID && !obj.srcPort && !obj.srcIp && !obj.dstPort && !obj.protocol && !obj.sgFrom && !obj.sgTo && !obj.status && !obj.msgErr;
@@ -30,7 +30,7 @@ export class AssertionsFindWhereDto {
         return !obj.launchUUID && !obj.srcIp && !obj.dstIp && !obj.srcPort && !obj.protocol && !obj.sgFrom && !obj.sgTo && !obj.status && !obj.msgErr;
     })
     @IsString()
-    dstPort?: number
+    dstPort?: string
 
     @ValidateIf((obj) => {
         return !obj.launchUUID && !obj.srcIp && !obj.srcPort && !obj.dstIp && !obj.dstPort && !obj.sgFrom && !obj.sgTo && !obj.status && !obj.msgErr;

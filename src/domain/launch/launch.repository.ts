@@ -10,10 +10,11 @@ export class LaunchRepository implements ILaunchRepository {
     async create(launch: Launch): Promise<launch> {
         return await this.prismaService.client.launch.create({
             data: {
-                pipeline: Number(launch.pipeline!),
+                pipeline: Number(launch.pipeline),
+                job: Number(launch.job),
                 fail_count: launch.failCount,
                 pass_count: launch.passCount,
-                duration: launch.duratin,
+                duration: launch.duration,
                 status: launch.status
             }
         })
@@ -24,9 +25,10 @@ export class LaunchRepository implements ILaunchRepository {
         let data: any = {}
 
         if (launch.pipeline != undefined) { data.pipeline = launch.pipeline }
+        if (launch.job != undefined) { data.job = launch.job }
         if (launch.failCount != undefined) { data.fail_count = launch.failCount }
         if (launch.passCount != undefined) { data.pass_count = launch.passCount }
-        if (launch.duratin != undefined) { data.duration = launch.duratin }
+        if (launch.duration != undefined) { data.duration = launch.duration }
         if (launch.status != undefined) { data.status = launch.status }
 
         return await this.prismaService.client.launch.update({

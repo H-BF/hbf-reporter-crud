@@ -1,4 +1,5 @@
 import { App } from "./app/app";
+import { logger } from "./common/logger/logger.service";
 import { MissEnvVariable } from "./errors/custom/miss-env-variable";
 
 (async () => {
@@ -8,8 +9,8 @@ import { MissEnvVariable } from "./errors/custom/miss-env-variable";
     const app = await (new App()).start()
 
     app.listen(process.env.APP_PORT, () => {
-        console.log("✅ Server started successfully!")
+        logger.info("✅ Server started successfully!")
     })
 })().catch(err => {
-    console.error(err)
+    logger.err(err)
 })

@@ -15,9 +15,6 @@ export class GetValidateMiddleware implements IMiddleware {
             forbidNonWhitelisted: true
         })
 
-        console.log(query)
-        console.log(errors)
-
         if (errors.length > 0) {
             next(new HTTPError(400, {
                 title: "не корректные данные в запросе",

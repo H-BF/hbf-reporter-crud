@@ -3,9 +3,9 @@ import { assertion_status, protocol } from "@prisma/client"
 export interface IAssertions {
     launchUUID?: string
     srcIp?: string
-    srcPort?: number
+    srcPort?: string
     dstIp?: string
-    dstPort?: number
+    dstPort?: string
     protocol?: protocol
     sgFrom?: string
     sgTo?: string
@@ -17,9 +17,9 @@ export class Assertions {
 
     private _launchUuid?: string
     private _srcIp?: string
-    private _srcPort?: number
+    private _srcPort?: string
     private _dstIp?: string
-    private _dstPort?: number
+    private _dstPort?: string
     private _protocol?: protocol
     private _sgFrom?: string
     private _sgTo?: string
@@ -55,10 +55,10 @@ export class Assertions {
         this._srcIp = srcIp
     }
 
-    public get srcPort(): number | undefined {
+    public get srcPort(): string | undefined {
         return this._srcPort
     }
-    public set srcPort(srcPort: number) {
+    public set srcPort(srcPort: string) {
         this._srcPort = srcPort
     }
 
@@ -70,11 +70,11 @@ export class Assertions {
         this._dstIp = dstIp
     }
 
-    public get dstPort(): number | undefined {
+    public get dstPort(): string | undefined {
         return this._dstPort
     }
 
-    public set dstPort(dstPort: number) {
+    public set dstPort(dstPort: string) {
         this._dstPort = dstPort
     }
 

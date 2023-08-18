@@ -2,25 +2,28 @@ import { launch_status } from '@prisma/client'
 
 export interface ILaunch {
     pipeline?: string
+    job?: string
     failCount?: number
     passCount?: number
-    duratin?: number
+    duration?: number
     status?: launch_status
 }
 
 export class Launch {
 
     private _pipeline?: string
+    private _job?: string
     private _failCount?: number
     private _passCount?: number
-    private _duratin?: number
+    private _duration?: number
     private _status?: launch_status
 
     constructor(data: ILaunch) {
         this._pipeline = data.pipeline
+        this._job = data.job
         this._failCount = data.failCount
         this._passCount = data.passCount
-        this._duratin = data.duratin
+        this._duration = data.duration
         this._status = data.status
 
     }
@@ -31,6 +34,14 @@ export class Launch {
 
     public set pipeline(pipline: string) {
         this._pipeline = pipline
+    }
+
+    public get job(): string | undefined {
+        return this._job
+    }
+
+    public set job(job: string) {
+        this._job = job
     }
 
     public get failCount(): number | undefined {
@@ -57,11 +68,11 @@ export class Launch {
         this._passCount = value
     }
 
-    public get duratin(): number | undefined {
-        return this._duratin
+    public get duration(): number | undefined {
+        return this._duration
     }
 
-    public set duratin(value: number) {
-        this._duratin = value
+    public set duration(value: number) {
+        this._duration = value
     }
 }

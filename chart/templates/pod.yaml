@@ -23,5 +23,9 @@ spec:
       value: postgresql://{{ .postgres.user }}:{{ .postgres.pwd }}@{{ .postgres.host }}:{{ .postgres.port }}/{{ .postgres.name }}?schema={{ .postgres.schema }}
     - name: APP_PORT
       value: "{{ .ports.addressPort | toString }}"
+    - name: LOG_LVL
+      value: {{ .logLevel }}
+    - name: LOG_TYPE
+      value: {{ .logType }}
   restartPolicy: {{ .restartPolicy }}
   {{- end }}

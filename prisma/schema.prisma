@@ -13,13 +13,16 @@ datasource db {
 model launch {
   uuid         String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   date         DateTime      @default(now())
-  pipeline     Int        @unique
+  pipeline     Int
+  job          Int
   fail_count   Int?
   pass_count   Int?
   duration     Int?
   status       launch_status @default(create)
   assertions   assertions[]
   launch_error launch_error?
+
+  @@unique([pipeline, job])
 }
 
 model launch_error {
@@ -33,9 +36,9 @@ model assertions {
   uuid        String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   launch_uuid String           @db.Uuid
   src_ip      String
-  src_port    Int
+  src_port    String
   dst_ip      String
-  dst_port    Int
+  dst_port    String
   protocol    protocol
   sg_from     String
   sg_to       String

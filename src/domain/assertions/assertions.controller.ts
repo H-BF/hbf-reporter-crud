@@ -8,6 +8,7 @@ import { AssertionsFindAllDto } from "./dto/assertions.find-all.dto";
 import { AssertionsFindWhereDto } from "./dto/assertions.find-where.dto";
 import { HTTPError } from "../../errors/custom/http-error";
 import { PostArrayValidateMiddleware } from "../../common/middleware/post-array.validate.middleware";
+import { controllerMethodLogger } from "../../common/middleware/controller.logger.middleware";
 
 export class AssertionsController extends BaseController {
 
@@ -18,25 +19,25 @@ export class AssertionsController extends BaseController {
                 path: '/assertion',
                 method: 'post',
                 func: this.create,
-                middlewares: [new PostValidateMiddleware(AssertionsCreateDto)]
+                middlewares: [controllerMethodLogger, new PostValidateMiddleware(AssertionsCreateDto)]
             },
             {
                 path: '/assertions',
                 method: 'post',
                 func: this.createAll,
-                middlewares: [new PostArrayValidateMiddleware(AssertionsCreateDto)]
+                middlewares: [controllerMethodLogger, new PostArrayValidateMiddleware(AssertionsCreateDto)]
             },
             {
                 path: '/assertions',
                 method: 'get',
                 func: this.getAllForLaunch,
-                middlewares: [new GetValidateMiddleware(AssertionsFindAllDto)]
+                middlewares: [controllerMethodLogger, new GetValidateMiddleware(AssertionsFindAllDto)]
             },
             {
                 path: '/assertions/where',
                 method: 'get',
                 func: this.getAllWhere,
-                middlewares: [new GetValidateMiddleware(AssertionsFindWhereDto)]
+                middlewares: [controllerMethodLogger, new GetValidateMiddleware(AssertionsFindWhereDto)]
             }
         ])
     }

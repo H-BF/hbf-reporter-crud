@@ -9,14 +9,14 @@ export class AssertionsCreateDto {
     @IsString()
     srcIp!: string
     
-    @IsNumber()
-    srcPort!: number
+    @IsString()
+    srcPort!: string
     
     @IsString()
     dstIp!: string
     
-    @IsNumber()
-    dstPort!: number
+    @IsString()
+    dstPort!: string
     
     @IsIn(Object.keys(protocol))
     protocol!: protocol
