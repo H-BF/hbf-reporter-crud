@@ -5,8 +5,8 @@ import { PostValidateMiddleware } from "../../common/middleware/post.validate.mi
 import { LaunchErrorCreateDto } from "./dto/launch-error.create.dto";
 import { LaunchErrorFindDto } from "./dto/launch-error.find.dto";
 import { LaunchErrorService } from "./launch-error.service";
-import { HTTPError } from "../../errors/custom/http-error";
 import { controllerMethodLogger } from "../../common/middleware/controller.logger.middleware";
+import { tryCatch } from "../../decorator/controller.try-catch.decorator";
 
 export class LaunchErrorController extends BaseController {
 
@@ -34,40 +34,22 @@ export class LaunchErrorController extends BaseController {
         ])
     }
 
+    @tryCatch("не удалось создать Launch Eroor")
     async create(req: Request, res: Response, next: NextFunction) {
-        try {
-            await this.launchErrorService.create(req.body)
-            res.status(201).send({})
-        } catch (err: any) {
-            next(new HTTPError(500, {
-                title: "не удалось создать Launch Eroor",
-                msg: err.message
-            }))
-        }
+        await this.launchErrorService.create(req.body)
+        res.status(201).send({})
     }
 
+    @tryCatch("не удалось получить данные по всем launch errors")
     async getAll(req: Request, res: Response, next: NextFunction) {
-        try {
-            const launchErrors = await this.launchErrorService.getAll()
-            res.status(200).send(launchErrors)
-        } catch (err: any) {
-            next(new HTTPError(500, {
-                title: "не удалось получить данные по всем launch errors",
-                msg: err.message
-            }))
-        }
+        const launchErrors = await this.launchErrorService.getAll()
+        res.status(200).send(launchErrors)
     }
 
+    @tryCatch("не удалось получить данные по launch error")
     async getByLaunchUuid(req: Request, res: Response, next: NextFunction) {
-        try {
-            const uuid = req.query['uuid']!!.toString()
-            const launchError = await this.launchErrorService.getByLaunchUUID(uuid)
-            res.status(200).send(launchError)
-        } catch (err: any) {
-            next(new HTTPError(500, {
-                title: "не удалось получить данные по launch error",
-                msg: err.message
-            }))
-        }
+        const uuid = req.query['uuid']!!.toString()
+        const launchError = await this.launchErrorService.getByLaunchUUID(uuid)
+        res.status(200).send(launchError)
     }
 }

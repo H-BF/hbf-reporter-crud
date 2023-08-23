@@ -1,5 +1,5 @@
 import { Logger, ILogObj, ISettingsParam } from 'tslog';
-import { MissEnvVariable } from '../../errors/custom/miss-env-variable';
+import { variables } from '../var_storage/variables-storage';
 
 class LoggerService {
 
@@ -16,16 +16,10 @@ class LoggerService {
 
     constructor() {
 
-        if(!process.env.LOG_LVL)
-            throw new MissEnvVariable('LOG_LVL')
-
-        if(!process.env.LOG_TYPE)
-            throw new MissEnvVariable('LOG_TYPE')
-
         const settings: ISettingsParam<ILogObj> = {
-            type: 'pretty',
+            type: this.validateType(variables.get("LOG_TYPE")),
             prettyLogTimeZone: 'local',
-            minLevel: this.logLvl[process.env.LOG_LVL],
+            minLevel: this.logLvl[variables.get("LOG_LVL")],
             prettyLogTemplate: '{{dd}}.{{mm}}.{{yyyy}} {{hh}}:{{MM}}:{{ss}}.{{ms}} {{logLevelName}}: '
             
         } 
@@ -46,6 +40,13 @@ class LoggerService {
 
     debug(msg: string) {
         this.logger.debug(msg)
+    }
+
+    private validateType(type: string): "json" | "pretty" | "hidden" {
+        const types = ["json", "pretty", "hidden"]
+        if (!types.includes(type))
+            throw new Error(`He корректный тип логирования ${type}. Тип должен принадлежать ${types.join(", ")}`)
+        return type as "json" | "pretty" | "hidden"
     }
 }
 

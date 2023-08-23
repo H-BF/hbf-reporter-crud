@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { BaseController } from "../../common/controller/base.controller";
 import { LaunchService } from "./launch.service";
-import { HTTPError } from "../../errors/custom/http-error";
 import { LaunchCreateDto } from "./dto/launch.create.dto";
 import { GetValidateMiddleware } from "../../common/middleware/get.validate.middleware";
 import { LaunchFindDto } from "./dto/launch.find.dto";
 import { LaunchUpdateDto } from "./dto/launch.update.dto";
 import { PostValidateMiddleware } from "../../common/middleware/post.validate.middleware";
 import { controllerMethodLogger } from "../../common/middleware/controller.logger.middleware";
+import { tryCatch } from "../../decorator/controller.try-catch.decorator";
 
 export class LaunchController extends BaseController {
 
@@ -41,52 +41,28 @@ export class LaunchController extends BaseController {
         ])
     }
 
+    @tryCatch("не удалось создать Launch")
     async create(req: Request, res: Response, next: NextFunction) {
-        try {
-            const uuid = await this.launchServise.createNewLaunch(req.body)
-            res.status(201).send({ "uuid": uuid })
-        } catch (err: any) {
-            next(new HTTPError(500, {
-                title: "не удалось создать Launch",
-                msg: err.message
-            }))
-        }
-    }
+        const uuid = await this.launchServise.createNewLaunch(req.body)
+        res.status(201).send({ "uuid": uuid })
+}
 
+    @tryCatch("не удалось обновить launch")
     async update(req: Request, res: Response, next: NextFunction) {
-        try {
-            const launch = await this.launchServise.updateLaunch(req.body)
-            res.status(200).send(launch)
-        } catch (err: any) {
-            next(new HTTPError(500, {
-                title: "не удалось обновить launch",
-                msg: err.message
-            }))
-        }
+        const launch = await this.launchServise.updateLaunch(req.body)
+        res.status(200).send(launch)
     }
 
+    @tryCatch("не удалось получить данные по всем launch")
     async getAll(req: Request, res: Response, next: NextFunction) {
-        try {
-            const launchs = await this.launchServise.getAllLaunchs()
-            res.status(200).send(launchs)
-        } catch (err: any) {
-            next(new HTTPError(500, {
-                title: "не удалось получить данные по всем launch",
-                msg: err.message
-            }))
-        }
+        const launchs = await this.launchServise.getAllLaunchs()
+        res.status(200).send(launchs)
     }
     
+    @tryCatch("не удалось получить данные по launch")
     async getOneByUuid(req: Request, res: Response, next: NextFunction) {
-        try {
-            const uuid = req.query['uuid']!!.toString()
-            const launch = await this.launchServise.getLaunchByUuid(uuid)
-            res.status(200).send(launch)
-        } catch (err: any) {
-            next(new HTTPError(500, {
-                title: "не удалось получить данные по launch",
-                msg: err.message
-            }))
-        }
+        const uuid = req.query['uuid']!!.toString()
+        const launch = await this.launchServise.getLaunchByUuid(uuid)
+        res.status(200).send(launch)
     }
 }
