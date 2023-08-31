@@ -8,6 +8,7 @@ import { LaunchUpdateDto } from "./dto/launch.update.dto";
 import { PostValidateMiddleware } from "../../common/middleware/post.validate.middleware";
 import { controllerMethodLogger } from "../../common/middleware/controller.logger.middleware";
 import { tryCatch } from "../../decorator/controller.try-catch.decorator";
+import { LaunchFindWhereDto } from "./dto/launch.find.where.dto";
 
 export class LaunchController extends BaseController {
 
@@ -35,8 +36,8 @@ export class LaunchController extends BaseController {
             {
                 path: '/launchs',
                 method: 'get',
-                func: this.getAll,
-                middlewares: [controllerMethodLogger]
+                func: this.getWhere,
+                middlewares: [controllerMethodLogger, new GetValidateMiddleware(LaunchFindWhereDto)]
             }
         ])
     }
@@ -54,8 +55,8 @@ export class LaunchController extends BaseController {
     }
 
     @tryCatch("не удалось получить данные по всем launch")
-    async getAll(req: Request, res: Response, next: NextFunction) {
-        const launchs = await this.launchServise.getAllLaunchs()
+    async getWhere(req: Request, res: Response, next: NextFunction) {
+        const launchs = await this.launchServise.getLaunchsWhere(req.query)
         res.status(200).send(launchs)
     }
     

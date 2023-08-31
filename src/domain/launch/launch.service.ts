@@ -5,6 +5,7 @@ import { ILaunchService } from "./interfaces/launch.service.interface";
 import { Launch } from "./launch.entity";
 import { LaunchRepository } from "./launch.repository";
 import { LaunchCloseDto } from "./dto/launch.close.dto";
+import { LaunchFindWhereDto } from "./dto/launch.find.where.dto";
 
 export class LaunchService implements ILaunchService {
 
@@ -28,11 +29,12 @@ export class LaunchService implements ILaunchService {
         await this.client.updateByUuid(dto.uuid, launch)
     }
 
-    async getAllLaunchs(): Promise<launch[] | null> {
-        return await this.client.getAll()
-    }
-
     async getLaunchByUuid(uuid: string): Promise<launch | null> {
         return await this.client.getByUuid(uuid)
+    }
+
+    async getLaunchsWhere(dto: LaunchFindWhereDto): Promise<launch[] | null> {
+        const launch = new Launch(dto)
+        return await this.client.getLaunchsWhere(launch)
     }
 }

@@ -12,25 +12,20 @@ export class LaunchRepository implements ILaunchRepository {
             data: {
                 pipeline: Number(launch.pipeline),
                 job: Number(launch.job),
+                src_branch: launch.srcBranch!,
+                dst_branch: launch.dstBranch!,
+                commit: launch.commit!,
                 fail_count: launch.failCount,
                 pass_count: launch.passCount,
                 duration: launch.duration,
+                hbf_tag: launch.hbfTag!,
                 status: launch.status
             }
         })
     }
 
     async updateByUuid(uuid: string, launch: Launch): Promise<launch> {
-
-        let data: any = {}
-
-        if (launch.pipeline != undefined) { data.pipeline = launch.pipeline }
-        if (launch.job != undefined) { data.job = launch.job }
-        if (launch.failCount != undefined) { data.fail_count = launch.failCount }
-        if (launch.passCount != undefined) { data.pass_count = launch.passCount }
-        if (launch.duration != undefined) { data.duration = launch.duration }
-        if (launch.status != undefined) { data.status = launch.status }
-
+        let data: any = this.transform(launch)
         return await this.prismaService.client.launch.update({
             data: data,
             where: {
@@ -47,7 +42,25 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
-    async getAll(): Promise<launch[] | null> {
-        return await this.prismaService.client.launch.findMany()
+    async getLaunchsWhere(launch: Launch): Promise<launch[] | null> {
+        let where: any = this.transform(launch)
+        return await this.prismaService.client.launch.findMany({
+            where: where
+        })
+    }
+
+    private transform(launch: Launch): any {
+        let result: any = {}
+        if (launch.pipeline != undefined) { result.pipeline = launch.pipeline }
+        if (launch.job != undefined) { result.job = launch.job }
+        if (launch.srcBranch != undefined) { result.src_branch = launch.srcBranch }
+        if (launch.dstBranch != undefined) { result.dst_branch = launch.dstBranch }
+        if (launch.commit != undefined) { result.commit = launch.commit }
+        if (launch.failCount != undefined) { result.fail_count = launch.failCount }
+        if (launch.passCount != undefined) { result.pass_count = launch.passCount }
+        if (launch.duration != undefined) { result.duration = launch.duration }
+        if (launch.hbfTag != undefined) { result.hbf_tag = launch.hbfTag }
+        if (launch.status != undefined) { result.status = launch.status }
+        return result 
     }
 }
