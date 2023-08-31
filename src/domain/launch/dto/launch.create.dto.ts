@@ -1,10 +1,22 @@
-import { IsNumber } from 'class-validator'
+import { IsNumber, IsString } from 'class-validator'
 
 export class LaunchCreateDto {
 
     @IsNumber()
-    pipeline!: string;
+    pipeline!: string
 
     @IsNumber()
-    job!: string;
+    job!: string
+
+    @IsString()
+    srcBranch!: string
+
+    @IsString()
+    dstBranch!: string
+
+    @IsString()
+    commit!: string
+
+    @IsString()
+    hbfTag!: string
 }

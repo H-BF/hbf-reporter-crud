@@ -15,9 +15,13 @@ model launch {
   date         DateTime      @default(now())
   pipeline     Int
   job          Int
+  src_branch   String
+  dst_branch   String
+  commit       String
   fail_count   Int?
   pass_count   Int?
   duration     Int?
+  hbf_tag      String
   status       launch_status @default(create)
   assertions   assertions[]
   launch_error launch_error?
