@@ -35,9 +35,9 @@ export class App {
         const a2 = new AssertionsRepository(client)
         const b2 = new AssertionsService(a2)
 
-        this.app.use('/v1', new LaunchController(b).router)
-        this.app.use('/v1', new LaunchErrorController(b1).router)
-        this.app.use('/v1', new AssertionsController(b2).router)
+        this.app.use('/hbf/v1', new LaunchController(b).router)
+        this.app.use('/hbf/v1', new LaunchErrorController(b1).router)
+        this.app.use('/hbf/v1', new AssertionsController(b2).router)
 
         const exf = new ExceptionFilter()
         this.app.use(exf.catch.bind(exf))
