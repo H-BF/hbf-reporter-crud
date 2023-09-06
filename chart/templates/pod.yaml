@@ -27,5 +27,11 @@ spec:
       value: {{ .logLevel }}
     - name: LOG_TYPE
       value: {{ .logType }}
+    - name: STAGE
+      value: {{ $.Values.stage }}
+    - name: INGRESS_NAME
+      value: {{ $.Values.ingressName }}
+    - name: INGRESS_PORT
+      value: "{{ $.Values.ingressPort | toString }}"
   restartPolicy: {{ .restartPolicy }}
   {{- end }}

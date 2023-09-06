@@ -1,4 +1,4 @@
-import { IsIn, IsOptional, IsString } from "class-validator";
+import { IsIn, IsNumberString, IsOptional, IsString } from "class-validator";
 import { launch_status } from "@prisma/client";
 
 export class LaunchFindWhereDto {
@@ -26,6 +26,14 @@ export class LaunchFindWhereDto {
     @IsOptional()
     @IsString()
     hbfTag?: string
+
+    @IsNumberString()
+    @IsOptional()
+    offset?: number
+
+    @IsNumberString()
+    @IsOptional()
+    limit?: number
 
     @IsOptional()
     @IsIn(Object.keys(launch_status))

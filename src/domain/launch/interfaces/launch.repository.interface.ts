@@ -6,4 +6,5 @@ export interface ILaunchRepository {
     updateByUuid(uuid: string, launch: Launch): Promise<launch>
     getByUuid(uuid: string): Promise<launch | null>
     getLaunchsWhere(launch: Launch): Promise<launch[] | null>
+    countAllRowsWhere(launch: Launch): Promise<number>
 }
