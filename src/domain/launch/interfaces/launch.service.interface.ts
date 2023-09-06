@@ -9,5 +9,5 @@ export interface ILaunchService {
     closeLaunch(dto: LaunchCloseDto): Promise<void>
     updateLaunch(dto: LaunchUpdateDto): Promise<launch>
     getLaunchByUuid(uuid: string): Promise<launch | null>
-    getLaunchsWhere(dto: LaunchFindWhereDto): Promise<launch[] | null>
+    getLaunchsWhere(dto: LaunchFindWhereDto): Promise<{totalRows: number, launchs: launch[] | []}>
 }

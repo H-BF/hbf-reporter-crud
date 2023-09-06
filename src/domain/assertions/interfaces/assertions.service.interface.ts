@@ -5,6 +5,5 @@ import { AssertionsFindWhereDto } from "../dto/assertions.find-where.dto"
 export interface IAssertionsService {
     create(dto: AssertionsCreateDto): Promise<assertions>
     createAll(dto: AssertionsCreateDto[]): Promise<number>
-    getAllForLaunch(uuid: string): Promise<assertions[] | null>
-    getAllWhere(dto: AssertionsFindWhereDto): Promise<assertions[] | null>
+    getAllWhere(dto: AssertionsFindWhereDto): Promise<{totalRows: number, assertions: assertions[] | []}>
 }

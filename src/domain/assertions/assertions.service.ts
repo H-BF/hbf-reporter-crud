@@ -22,12 +22,14 @@ export class AssertionsService implements IAssertionsService {
         return await this.client.createMany(assertions)
     }
 
-    async getAllForLaunch(uuid: string): Promise<assertions[] | null> {
-        return await this.client.getAllForLaunchUuid(uuid)
-    }
-
-    async getAllWhere(dto: AssertionsFindWhereDto): Promise<assertions[] | null> {
-        const where = new Assertions(dto)
-        return await this.client.getAssertionsWhere(where)
+    async getAllWhere(dto: AssertionsFindWhereDto): Promise<{totalRows: number, assertions: assertions[] | []}> {
+        const { offset, limit, ...data } = dto
+        const where = new Assertions(data)
+        const totalRows = await this.client.countAllRowsWhere(where)
+        const assertions = await this.client.getAssertionsWhere(where, offset, limit)
+        return {
+            totalRows: totalRows,
+            assertions: assertions || []
+        }
     }
 }

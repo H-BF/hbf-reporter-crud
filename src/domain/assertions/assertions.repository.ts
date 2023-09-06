@@ -24,17 +24,22 @@ export class AssertionsRepository implements IAssertionsRepository {
         return count
     }
 
-    async getAllForLaunchUuid(uuid: string): Promise<assertions[] | null> {
+    async getAssertionsWhere(
+        assertion: Assertions,
+        offset?: number,
+        limit?: number
+    ): Promise<assertions[] | null> {
+        let where: any = this.transform(assertion, TransformType.WHERE)
         return await this.prismaService.client.assertions.findMany({
-            where: {
-                launch_uuid: uuid
-            }
+            where: where,
+            skip: Number(offset) || undefined,
+            take: Number(limit) || undefined
         })
     }
 
-    async getAssertionsWhere(assertion: Assertions): Promise<assertions[] | null> {
+    async countAllRowsWhere(assertion: Assertions): Promise<number> {
         let where: any = this.transform(assertion, TransformType.WHERE)
-        return await this.prismaService.client.assertions.findMany({
+        return await this.prismaService.client.assertions.count({
             where: where
         })
     }

@@ -42,9 +42,26 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
-    async getLaunchsWhere(launch: Launch): Promise<launch[] | null> {
+    async getLaunchsWhere(
+        launch: Launch,
+        offset?: number,
+        limit?: number
+    ): Promise<launch[] | null> {
         let where: any = this.transform(launch)
         return await this.prismaService.client.launch.findMany({
+            where: where,
+            skip: Number(offset) || undefined,
+            take: Number(limit) || undefined,
+            orderBy: [
+                { pipeline: 'desc' },
+                { job: 'desc' }
+            ]
+        })
+    }
+
+    async countAllRowsWhere(launch: Launch): Promise<number> {
+        let where: any = this.transform(launch)
+        return await this.prismaService.client.launch.count({
             where: where
         })
     }

@@ -1,3 +1,4 @@
+import swaggerUi, { JsonObject } from 'swagger-ui-express';
 import express, { Application } from "express"
 import { LaunchController } from "../domain/launch/launch.controller"
 import { PrismaService } from "../database/prisma.service"
@@ -11,6 +12,8 @@ import bodyParser from 'body-parser'
 import { AssertionsRepository } from "../domain/assertions/assertions.repository"
 import { AssertionsService } from "../domain/assertions/assertions.service"
 import { AssertionsController } from "../domain/assertions/assertions.controller"
+import { variables } from '../common/var_storage/variables-storage';
+import { swaggerTemplate } from '../swagger.template';
 
 export class App {
 
@@ -26,21 +29,30 @@ export class App {
         const client = new PrismaService()
         await client.connect()
 
-        const a = new LaunchRepository(client)
-        const b = new LaunchService(a)
+        //Инициализируеми репозитории
+        const launchRepo = new LaunchRepository(client)
+        const launchErrRepo = new LaunchErrorRepository(client)
+        const assertionRepo = new AssertionsRepository(client)
 
-        const a1 = new LaunchErrorRepository(client)
-        const b1 = new LaunchErrorService(a1)
+        //Инициализируем сервисы
+        const launchSvc = new LaunchService(launchRepo)
+        const launchErrSvc = new LaunchErrorService(launchErrRepo)
+        const assertionSvc = new AssertionsService(assertionRepo)
 
-        const a2 = new AssertionsRepository(client)
-        const b2 = new AssertionsService(a2)
-
-        this.app.use('/hbf/v1', new LaunchController(b).router)
-        this.app.use('/hbf/v1', new LaunchErrorController(b1).router)
-        this.app.use('/hbf/v1', new AssertionsController(b2).router)
+        //Инициализируем и привязываем контроллеры
+        this.app.use('/hbf/v1', new LaunchController(launchSvc).router)
+        this.app.use('/hbf/v1', new LaunchErrorController(launchErrSvc).router)
+        this.app.use('/hbf/v1', new AssertionsController(assertionSvc).router)
 
         const exf = new ExceptionFilter()
         this.app.use(exf.catch.bind(exf))
+
+        if(variables.get("STAGE") === "dev") {
+            this.app.use('/hbf/docs', swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
+                host: variables.get("INGRESS_NAME"),
+                port: variables.get("INGRESS_PORT")
+            }) as unknown as JsonObject))
+        }
 
         return this.app
     }
