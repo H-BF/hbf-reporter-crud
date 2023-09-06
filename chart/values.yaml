@@ -21,5 +21,9 @@ service:
   port: 9000
   type: LoadBalancer
 
+stage: dev
+ingressName: 172.25.143.81
+ingressPort: 9000
+
 defaults:
   securityContext: {}
