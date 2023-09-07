@@ -24,6 +24,10 @@ service:
 stage: dev
 ingressName: 172.25.143.81
 ingressPort: 9000
+ingressPath: hbf
+apiVersion: v1
+
+trustedAddress: http://frontops-ingress-controller.frontops.svc.k8s.dldevel
 
 defaults:
   securityContext: {}
