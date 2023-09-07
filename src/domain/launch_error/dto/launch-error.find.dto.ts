@@ -1,8 +1,8 @@
-import { IsString, IsUUID } from "class-validator"
+import { IsUUID } from "class-validator"
 
 export class LaunchErrorFindDto {
 
     @IsUUID()
-    launch_uuid!: string
+    launchUuid!: string
 
 }

@@ -4,5 +4,8 @@ export const requiredVariablesList = [
     "LOG_TYPE",
     "STAGE",
     "INGRESS_NAME",
-    "INGRESS_PORT"
+    "INGRESS_PORT",
+    "INGRESS_PATH",
+    "API_VERSION",
+    "TRUSTED_ADDRESS"
 ]

@@ -16,8 +16,8 @@ export class LaunchErrorService implements ILaunchErrorService {
         await this.client.create(launchError)
     }
 
-    async getByLaunchUUID(uuid: string): Promise<launch_error | null> {
-        return await this.client.getByLaunchUuid(uuid)
+    async getByLaunchUUID(launchUuid: string): Promise<launch_error | null> {
+        return await this.client.getByLaunchUuid(launchUuid)
     }
 
     async getAll(): Promise<launch_error[] | null> {

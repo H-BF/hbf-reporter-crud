@@ -33,5 +33,11 @@ spec:
       value: {{ $.Values.ingressName }}
     - name: INGRESS_PORT
       value: "{{ $.Values.ingressPort | toString }}"
+    - name: INGRESS_PATH
+      value: {{ $.Values.ingressPath }}
+    - name: TRUSTED_ADDRESS
+      value: {{ $.Values.trustedAddress }}
+    - name: API_VERSION
+      value: {{ $.Values.apiVersion }}
   restartPolicy: {{ .restartPolicy }}
   {{- end }}

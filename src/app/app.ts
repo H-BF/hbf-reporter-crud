@@ -1,5 +1,5 @@
 import swaggerUi, { JsonObject } from 'swagger-ui-express';
-import express, { Application } from "express"
+import express, { Application, Request, Response, NextFunction } from "express"
 import { LaunchController } from "../domain/launch/launch.controller"
 import { PrismaService } from "../database/prisma.service"
 import { LaunchRepository } from "../domain/launch/launch.repository"
@@ -14,14 +14,19 @@ import { AssertionsService } from "../domain/assertions/assertions.service"
 import { AssertionsController } from "../domain/assertions/assertions.controller"
 import { variables } from '../common/var_storage/variables-storage';
 import { swaggerTemplate } from '../swagger.template';
+import { HTTPError } from "../errors/custom/http-error";
+import { CORSMiddleware } from '../common/middleware/cors.middleware';
+import { PathNotFoundMiddleware } from '../common/middleware/path.not.found.middleware';
 
 export class App {
 
     private app: Application
+    private path: string
 
     constructor() {
         this.app = express()
         this.app.use(bodyParser.json())
+        this.path = `/${variables.get("INGRESS_PATH")}/${variables.get("API_VERSION")}`
     }
 
     async start(): Promise<Application> {
@@ -39,20 +44,27 @@ export class App {
         const launchErrSvc = new LaunchErrorService(launchErrRepo)
         const assertionSvc = new AssertionsService(assertionRepo)
 
-        //Инициализируем и привязываем контроллеры
-        this.app.use('/hbf/v1', new LaunchController(launchSvc).router)
-        this.app.use('/hbf/v1', new LaunchErrorController(launchErrSvc).router)
-        this.app.use('/hbf/v1', new AssertionsController(assertionSvc).router)
+        // Добавлям правила для CORS
+        this.app.use(new CORSMiddleware().execute)
 
-        const exf = new ExceptionFilter()
-        this.app.use(exf.catch.bind(exf))
+        //Инициализируем и привязываем контроллеры
+        this.app.use(this.path, new LaunchController(launchSvc).router)
+        this.app.use(this.path, new LaunchErrorController(launchErrSvc).router)
+        this.app.use(this.path, new AssertionsController(assertionSvc).router)
 
         if(variables.get("STAGE") === "dev") {
-            this.app.use('/hbf/docs', swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
+            this.app.use(`${this.path}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
                 host: variables.get("INGRESS_NAME"),
                 port: variables.get("INGRESS_PORT")
             }) as unknown as JsonObject))
         }
+
+        //Обработка несуществующих path
+        this.app.use(new PathNotFoundMiddleware().execute)
+
+        //Биндим обработчик ошибок
+        const exf = new ExceptionFilter()
+        this.app.use(exf.catch.bind(exf))
 
         return this.app
     }

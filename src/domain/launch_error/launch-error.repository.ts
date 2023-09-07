@@ -16,10 +16,10 @@ export class LaunchErrorRepository implements ILaunchErrorRepository {
         })
     }
 
-    async getByLaunchUuid(uuid: string): Promise<launch_error | null> {
+    async getByLaunchUuid(launchUuid: string): Promise<launch_error | null> {
         return await this.prismaService.client.launch_error.findFirst({
             where: {
-                uuid: uuid
+                launch_uuid: launchUuid
             }
         })
     }
