@@ -331,10 +331,8 @@ export const swaggerTemplate = parse({
             "schema": {
               "type": "string",
               "enum": [
-                "create",
-                "in_process",
-                "finish",
-                "error"
+                "pass",
+                "fail"
               ]
             }
           },
