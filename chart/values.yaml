@@ -27,7 +27,7 @@ ingressPort: 9000
 ingressPath: hbf
 apiVersion: v1
 
-trustedAddress: http://frontops-ingress-controller.frontops.svc.k8s.dldevel
+trustedAddress: http://frontops-ingress-controller.frontops.svc.k8s.dldevel;http://172.25.143.81:9999
 
 defaults:
   securityContext: {}
