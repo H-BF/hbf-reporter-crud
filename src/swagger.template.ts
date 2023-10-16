@@ -294,7 +294,7 @@ export const swaggerTemplate = parse({
           },
           {
             "in": "query",
-            "name": "sgFrom",
+            "name": "from",
             "required": false,
             "schema": {
               "type": "string"
@@ -302,10 +302,36 @@ export const swaggerTemplate = parse({
           },
           {
             "in": "query",
-            "name": "sgTo",
+            "name": "to",
             "required": false,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "fromType",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fqdn",
+                "cidr",
+                "sq"
+              ]
+            }            
+          },
+          {
+            "in": "query",
+            "name": "toType",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fqdn",
+                "cidr",
+                "sg"
+              ]
             }
           },
           {
@@ -472,11 +498,27 @@ export const swaggerTemplate = parse({
               "udp"
             ]
           },
-          "sg_from": {
+          "from": {
             "type": "string"
           },
-          "sg_to": {
+          "to": {
             "type": "string"
+          },
+          "fromType": {
+            "type": "string",
+            "enum": [
+              "fqdn",
+              "cidr",
+              "sg"
+            ]
+          },
+          "toType": {
+            "type": "string",
+            "enum": [
+              "fqdn",
+              "cidr",
+              "sg"
+            ]
           },
           "status": {
             "type": "string",

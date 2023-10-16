@@ -1,4 +1,4 @@
-import { assertion_status, protocol } from "@prisma/client"
+import { assertion_status, direction_type, protocol } from "@prisma/client"
 import { IsIn, IsNumberString, IsOptional, IsString, IsUUID } from "class-validator"
 
 export class AssertionsFindWhereDto {
@@ -29,11 +29,19 @@ export class AssertionsFindWhereDto {
 
     @IsOptional()
     @IsString()
-    sgFrom?: string
+    from?: string
 
     @IsOptional()
     @IsString()
-    sgTo?: string
+    to?: string
+
+    @IsOptional()
+    @IsIn(Object.keys(direction_type))
+    fromType?: direction_type
+
+    @IsOptional()
+    @IsIn(Object.keys(direction_type))
+    toType?: direction_type
 
     @IsNumberString()
     @IsOptional()
