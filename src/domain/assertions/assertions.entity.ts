@@ -1,4 +1,4 @@
-import { assertion_status, protocol } from "@prisma/client"
+import { direction_type, assertion_status, protocol } from "@prisma/client"
 
 export interface IAssertions {
     launchUUID?: string
@@ -7,8 +7,10 @@ export interface IAssertions {
     dstIp?: string
     dstPort?: string
     protocol?: protocol
-    sgFrom?: string
-    sgTo?: string
+    from?: string
+    to?: string
+    fromType?: direction_type
+    toType?: direction_type
     status?: assertion_status
     msgErr?: string
 }
@@ -21,8 +23,10 @@ export class Assertions {
     private _dstIp?: string
     private _dstPort?: string
     private _protocol?: protocol
-    private _sgFrom?: string
-    private _sgTo?: string
+    private _from?: string
+    private _to?: string
+    private _fromType?: direction_type
+    private _toType?: direction_type
     private _status?: assertion_status
     private _msgErr?: string
 
@@ -33,8 +37,10 @@ export class Assertions {
         this._dstIp = data.dstIp
         this._dstPort = data.dstPort
         this._protocol = data.protocol
-        this._sgFrom = data.sgFrom
-        this._sgTo = data.sgTo
+        this._from = data.from
+        this._to = data.to
+        this._fromType = data.fromType
+        this._toType = data.toType
         this._status = data.status
         this._msgErr = data.msgErr
     }
@@ -86,20 +92,36 @@ export class Assertions {
         this._protocol = protocol
     }
 
-    public get sgFrom(): string | undefined {
-        return this._sgFrom
+    public get from(): string | undefined {
+        return this._from
     }
 
-    public set sgFrom(sgFrom: string) {
-        this._sgFrom = sgFrom
+    public set from(from: string) {
+        this._from = from
     }
 
-    public get sgTo(): string | undefined {
-        return this._sgTo
+    public get to(): string | undefined {
+        return this._to
     }
 
-    public set sgTo(sgTo: string) {
-        this._sgTo = sgTo
+    public set to(to: string) {
+        this._to = to
+    }
+
+    public get fromType():  direction_type | undefined {
+        return this._fromType
+    }
+
+    public set fromType(fromType: direction_type) {
+        this._fromType = fromType
+    }
+
+    public get toType():  direction_type | undefined {
+        return this._toType
+    }
+
+    public set toType(toType: direction_type) {
+        this._toType = toType
     }
 
     public get status(): assertion_status | undefined {

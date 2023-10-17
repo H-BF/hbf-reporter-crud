@@ -14,7 +14,7 @@ reporter:
     name: postgres
     user: nkiver
     pwd: nkiver
-    schema: report
+    schema: hbf_report
   restartPolicy: OnFailure
 
 service:

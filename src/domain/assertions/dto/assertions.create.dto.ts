@@ -1,5 +1,5 @@
-import { assertion_status, protocol } from "@prisma/client"
-import { IsIn, IsNumber, IsOptional, IsString, IsUUID } from "class-validator"
+import { assertion_status, direction_type, protocol } from "@prisma/client"
+import { IsIn, IsOptional, IsString, IsUUID } from "class-validator"
 
 export class AssertionsCreateDto {
     
@@ -22,11 +22,17 @@ export class AssertionsCreateDto {
     protocol!: protocol
     
     @IsString()
-    sgFrom!: string
+    from!: string
     
     @IsString()
-    sgTo!: string
+    to!: string
     
+    @IsIn(Object.keys(direction_type))
+    fromType!: direction_type
+
+    @IsIn(Object.keys(direction_type))
+    toType!: direction_type
+
     @IsIn(Object.keys(assertion_status))
     status!: assertion_status
     

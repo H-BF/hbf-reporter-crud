@@ -52,10 +52,11 @@ export class AssertionsRepository implements IAssertionsRepository {
         if (assertion.dstIp != undefined) { data.dst_ip = assertion.dstIp }
         if (assertion.dstPort != undefined) { data.dst_port = assertion.dstPort }
         if (assertion.protocol != undefined) { data.protocol = assertion.protocol }
-        if (assertion.sgFrom != undefined) { data.sg_from = assertion.sgFrom }
-        if (assertion.sgTo != undefined) { data.sg_to = assertion.sgTo }
+        if (assertion.from != undefined) { data.from = assertion.from }
+        if (assertion.to != undefined) { data.to = assertion.to }
+        if (assertion.fromType != undefined) { data.from_type = assertion.fromType }
+        if (assertion.toType != undefined) { data.to_type = assertion.toType }
         if (assertion.status != undefined) { data.status = assertion.status }
-
         switch (type) {
             case TransformType.WHERE:
                 if (assertion.msgErr != undefined) { data.msg_err = assertion.msgErr }
