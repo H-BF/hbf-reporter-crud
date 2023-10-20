@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "direction_type" AS ENUM ('fqdn', 'cidr', 'sg');
+
+-- CreateEnum
 CREATE TYPE "assertion_status" AS ENUM ('pass', 'fail');
 
 -- CreateEnum
@@ -13,9 +16,13 @@ CREATE TABLE "launch" (
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "pipeline" INTEGER NOT NULL,
     "job" INTEGER NOT NULL,
+    "src_branch" TEXT NOT NULL,
+    "dst_branch" TEXT NOT NULL,
+    "commit" TEXT NOT NULL,
     "fail_count" INTEGER,
     "pass_count" INTEGER,
     "duration" INTEGER,
+    "hbf_tag" TEXT NOT NULL,
     "status" "launch_status" NOT NULL DEFAULT 'create',
 
     CONSTRAINT "launch_pkey" PRIMARY KEY ("uuid")
@@ -39,8 +46,10 @@ CREATE TABLE "assertions" (
     "dst_ip" TEXT NOT NULL,
     "dst_port" TEXT NOT NULL,
     "protocol" "protocol" NOT NULL,
-    "sg_from" TEXT NOT NULL,
-    "sg_to" TEXT NOT NULL,
+    "from" TEXT NOT NULL,
+    "to" TEXT NOT NULL,
+    "from_type" "direction_type" NOT NULL,
+    "to_type" "direction_type" NOT NULL,
     "status" "assertion_status" NOT NULL,
     "msg_err" TEXT,
 

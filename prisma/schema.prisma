@@ -44,11 +44,19 @@ model assertions {
   dst_ip      String
   dst_port    String
   protocol    protocol
-  sg_from     String
-  sg_to       String
+  from        String
+  to          String
+  from_type   direction_type
+  to_type     direction_type
   status      assertion_status
   msg_err     String?
   launch      launch           @relation(fields: [launch_uuid], references: [uuid])
+}
+
+enum direction_type {
+  fqdn
+  cidr
+  sg
 }
 
 enum assertion_status {
