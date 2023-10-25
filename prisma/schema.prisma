@@ -50,6 +50,7 @@ model assertions {
   to_type     direction_type
   status      assertion_status
   msg_err     String?
+  test_name   String
   launch      launch           @relation(fields: [launch_uuid], references: [uuid])
 }
 

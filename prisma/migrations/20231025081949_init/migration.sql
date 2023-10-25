@@ -52,6 +52,7 @@ CREATE TABLE "assertions" (
     "to_type" "direction_type" NOT NULL,
     "status" "assertion_status" NOT NULL,
     "msg_err" TEXT,
+    "test_name" TEXT NOT NULL,
 
     CONSTRAINT "assertions_pkey" PRIMARY KEY ("uuid")
 );
