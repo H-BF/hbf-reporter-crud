@@ -13,6 +13,7 @@ export interface IAssertions {
     toType?: direction_type
     status?: assertion_status
     msgErr?: string
+    testName?: string
 }
 
 export class Assertions {
@@ -29,6 +30,7 @@ export class Assertions {
     private _toType?: direction_type
     private _status?: assertion_status
     private _msgErr?: string
+    private _testName?: string
 
     constructor(data: IAssertions) {
         this._launchUuid = data.launchUUID
@@ -43,6 +45,7 @@ export class Assertions {
         this._toType = data.toType
         this._status = data.status
         this._msgErr = data.msgErr
+        this._testName = data.testName
     }
 
     public get launchUuid(): string | undefined {
@@ -138,5 +141,13 @@ export class Assertions {
 
     public set msgErr(msgErr: string) {
         this._msgErr = msgErr
+    }
+
+    public get testName(): string | undefined {
+        return this._testName 
+    }
+
+    public set testName(testName: string) {
+        this._testName = testName
     }
 }

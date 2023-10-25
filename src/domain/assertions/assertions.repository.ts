@@ -57,6 +57,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         if (assertion.fromType != undefined) { data.from_type = assertion.fromType }
         if (assertion.toType != undefined) { data.to_type = assertion.toType }
         if (assertion.status != undefined) { data.status = assertion.status }
+        if (assertion.testName != undefined) { data.test_name = assertion.testName}
         switch (type) {
             case TransformType.WHERE:
                 if (assertion.msgErr != undefined) { data.msg_err = assertion.msgErr }

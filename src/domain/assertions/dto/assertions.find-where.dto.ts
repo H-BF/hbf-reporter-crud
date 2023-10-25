@@ -58,4 +58,8 @@ export class AssertionsFindWhereDto {
     @IsOptional()
     @IsString()
     msgErr?: string;
+
+    @IsOptional()
+    @IsString()
+    testName?: string;
 }
