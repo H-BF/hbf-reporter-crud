@@ -39,4 +39,7 @@ export class AssertionsCreateDto {
     @IsString()
     @IsOptional()
     msgErr!: string
+
+    @IsString()
+    testName!: string;
 }
