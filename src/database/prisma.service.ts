@@ -15,11 +15,8 @@ export class PrismaService {
 
         this.client.$on('query' as never, async (event: Prisma.QueryEvent) => {
             const query = event.query
-            const params: string[] = JSON.parse(event.params)
-            const result = params.reduce((acc, param, index) => {
-                return acc.replace(`$${index + 1}`, `"${String(param)}"`);
-              }, query);
-              logger.debug(result)
+            const params = event.params
+            logger.debug(JSON.stringify({ query, params }))
         })
     }
 
