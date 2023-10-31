@@ -18,7 +18,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         assertions.forEach(assertion => {
             data = data.concat(this.transform(assertion, TransformType.CREATE))
         })
-        await this.sleep(15)
+        // await this.sleep(15)
         const { count } = await this.prismaService.client.assertions.createMany({
             data: data
         })
