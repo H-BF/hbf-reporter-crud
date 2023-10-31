@@ -75,9 +75,9 @@ export class AssertionsRepository implements IAssertionsRepository {
     }
 
     async sleep() {
-        const min = 500
-        const max = 3000
-        const delay = Math.floor(Math.random() * (max - min)) + min
+        const min = 1
+        const max = 6
+        const delay = (Math.floor(Math.random() * (max - min)) + min) * 500
         console.log(`AAAAAAAAAA ждем ${delay} мсек`)
         return new Promise(resolve => setTimeout(resolve, delay))
     }
