@@ -18,7 +18,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         assertions.forEach(assertion => {
             data = data.concat(this.transform(assertion, TransformType.CREATE))
         })
-        // await this.sleep(15)
+        await this.sleep()
         const { count } = await this.prismaService.client.assertions.createMany({
             data: data
         })
@@ -74,8 +74,10 @@ export class AssertionsRepository implements IAssertionsRepository {
         return data
     }
 
-    async sleep(time: number) {
-        const delay = Math.floor(Math.random() * time) * 1000
+    async sleep() {
+        const min = 500
+        const max = 3000
+        const delay = Math.floor(Math.random() * (max - min)) + min
         console.log(`AAAAAAAAAA ждем ${delay} мсек`)
         return new Promise(resolve => setTimeout(resolve, delay))
     }
