@@ -18,7 +18,6 @@ service:
       name: http
       targetPort: 9001
 
-
 ingress:
   enabled: true
   objects:
@@ -29,6 +28,25 @@ ingress:
       hosts:
       - name: "{{ .Helm.Release.Namespace }}-ingress-controller.{{ .Helm.Release.Namespace }}.svc.{{ .Helm.Release.Cluster }}"
         path: /hbf
+
+networkPolicy:
+  enabled: false
+  mode: native
+  advanced:
+    ingresFromController:
+      type: ingress
+      rules:
+        - description: ingress access from nginx
+          release:
+            name: ingress-nginx
+            subproject: {{ .Helm.Release.Namespace }}
+    ingresFromFrontEnd:
+      type: ingress
+      rules:
+        - description: ingress access from nginx
+          release:
+            name: front-testops
+            subproject: frontops
 
 env:
   APP_PORT: "9001"
