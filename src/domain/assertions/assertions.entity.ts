@@ -13,6 +13,8 @@ export interface IAssertions {
     toType?: direction_type
     status?: assertion_status
     msgErr?: string
+    icmpType?: string
+    icmpCommand?: string
     testName?: string
 }
 
@@ -30,6 +32,8 @@ export class Assertions {
     private _toType?: direction_type
     private _status?: assertion_status
     private _msgErr?: string
+    private _icmpType?: string
+    private _icmpCommand?: string
     private _testName?: string
 
     constructor(data: IAssertions) {
@@ -45,6 +49,8 @@ export class Assertions {
         this._toType = data.toType
         this._status = data.status
         this._msgErr = data.msgErr
+        this._icmpType = data.icmpType
+        this._icmpCommand = data.icmpCommand
         this._testName = data.testName
     }
 
@@ -141,6 +147,22 @@ export class Assertions {
 
     public set msgErr(msgErr: string) {
         this._msgErr = msgErr
+    }
+
+    public set icmpType(icmpType: string) {
+        this._icmpType = icmpType
+    }
+
+    public get icmpType(): string | undefined {
+        return this._icmpType
+    }
+
+    public set icmpCommand(icmpCommand: string) {
+        this._icmpCommand = icmpCommand
+    }
+
+    public get icmpCommand(): string | undefined {
+        return this._icmpCommand
     }
 
     public get testName(): string | undefined {
