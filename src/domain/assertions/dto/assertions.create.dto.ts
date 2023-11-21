@@ -10,12 +10,14 @@ export class AssertionsCreateDto {
     srcIp!: string
     
     @IsString()
+    @IsOptional()
     srcPort!: string
     
     @IsString()
     dstIp!: string
     
     @IsString()
+    @IsOptional()
     dstPort!: string
     
     @IsIn(Object.keys(protocol))
@@ -39,6 +41,14 @@ export class AssertionsCreateDto {
     @IsString()
     @IsOptional()
     msgErr!: string
+
+    @IsString()
+    @IsOptional()
+    icmpType!: string
+
+    @IsString()
+    @IsOptional()    
+    icmpCommand!: string
 
     @IsString()
     testName!: string;
