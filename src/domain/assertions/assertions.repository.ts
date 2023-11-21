@@ -2,17 +2,20 @@ import { $Enums, assertions } from "@prisma/client";
 import { PrismaService } from "../../database/prisma.service";
 import { Assertions } from "./assertions.entity";
 import { IAssertionsRepository } from "./interfaces/assertions.repository.interface";
+import { retry } from "../../decorator/repository.retry.decorator";
 
 export class AssertionsRepository implements IAssertionsRepository {
 
     constructor(private prismaService: PrismaService) { }
 
+    @retry()
     async create(assertion: Assertions): Promise<assertions> {
         return await this.prismaService.client.assertions.create({
             data: this.transform(assertion)
         })
     }
 
+    @retry()
     async createMany(assertions: Assertions[]): Promise<number> {
         let data: any[] = []
         console.log("Assertions: " + assertions.length)

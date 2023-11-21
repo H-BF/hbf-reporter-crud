@@ -9,6 +9,7 @@ reporter:
     addressPort: 9000
     addressPortAlias: reporter
   postgres:
+    appName: hbf-reporter-crud
     host: 172.25.143.81
     port: 5432
     name: postgres
