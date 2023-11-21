@@ -20,7 +20,7 @@ spec:
       name: {{ .ports.addressPortAlias }}
     env:
     - name: DATABASE_URL
-      value: postgresql://{{ .postgres.user }}:{{ .postgres.pwd }}@{{ .postgres.host }}:{{ .postgres.port }}/{{ .postgres.name }}?schema={{ .postgres.schema }}
+      value: postgresql://{{ .postgres.user }}:{{ .postgres.pwd }}@{{ .postgres.host }}:{{ .postgres.port }}/{{ .postgres.name }}?schema={{ .postgres.schema }}&application_name={{ .postgres.appName }}
     - name: APP_PORT
       value: "{{ .ports.addressPort | toString }}"
     - name: LOG_LVL
