@@ -59,6 +59,14 @@ export class AssertionsFindWhereDto {
     @IsString()
     msgErr?: string;
 
+    @IsString()
+    @IsOptional()
+    icmpType?: string;
+
+    @IsString()
+    @IsOptional()    
+    icmpCommand?: string;
+
     @IsOptional()
     @IsString()
     testName?: string;

@@ -9,16 +9,16 @@ export class AssertionsRepository implements IAssertionsRepository {
 
     async create(assertion: Assertions): Promise<assertions> {
         return await this.prismaService.client.assertions.create({
-            data: this.transform(assertion, TransformType.CREATE)
+            data: this.transform(assertion)
         })
     }
 
     async createMany(assertions: Assertions[]): Promise<number> {
         let data: any[] = []
+        console.log("Assertions: " + assertions.length)
         assertions.forEach(assertion => {
-            data = data.concat(this.transform(assertion, TransformType.CREATE))
+            data = data.concat(this.transform(assertion))
         })
-        // await this.sleep()
         const { count } = await this.prismaService.client.assertions.createMany({
             data: data
         })
@@ -30,7 +30,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         offset?: number,
         limit?: number
     ): Promise<assertions[] | null> {
-        let where: any = this.transform(assertion, TransformType.WHERE)
+        let where: any = this.transform(assertion)
         return await this.prismaService.client.assertions.findMany({
             where: where,
             skip: Number(offset) || undefined,
@@ -39,13 +39,13 @@ export class AssertionsRepository implements IAssertionsRepository {
     }
 
     async countAllRowsWhere(assertion: Assertions): Promise<number> {
-        let where: any = this.transform(assertion, TransformType.WHERE)
+        let where: any = this.transform(assertion)
         return await this.prismaService.client.assertions.count({
             where: where
         })
     }
 
-    private transform(assertion: Assertions, type: TransformType): any {
+    private transform(assertion: Assertions): any {
         let data: any = {}
         if (assertion.launchUuid != undefined) { data.launch_uuid = assertion.launchUuid }
         if (assertion.srcIp != undefined) { data.src_ip = assertion.srcIp }
@@ -58,29 +58,10 @@ export class AssertionsRepository implements IAssertionsRepository {
         if (assertion.fromType != undefined) { data.from_type = assertion.fromType }
         if (assertion.toType != undefined) { data.to_type = assertion.toType }
         if (assertion.status != undefined) { data.status = assertion.status }
-        if (assertion.testName != undefined) { data.test_name = assertion.testName}
-        switch (type) {
-            case TransformType.WHERE:
-                if (assertion.msgErr != undefined) { data.msg_err = assertion.msgErr }
-                break;
-            case TransformType.CREATE:
-                if (assertion.msgErr != undefined) {
-                    data.msg_err = assertion.msgErr
-                } else {
-                    data.msg_err = null
-                }
-                break;
-        }
+        if (assertion.testName != undefined) { data.test_name = assertion.testName }
+        if (assertion.icmpType != undefined) { data.icmp_type = assertion.icmpType }
+        if (assertion.icmpCommand != undefined) { data.icmp_command = assertion.icmpCommand } 
+        if (assertion.msgErr != undefined) { data.msg_err = assertion.msgErr }
         return data
     }
-
-    // async sleep() {
-    //     const min = 1
-    //     const max = 6
-    //     const delay = (Math.floor(Math.random() * (max - min)) + min) * 500
-    //     console.log(`AAAAAAAAAA ждем ${delay} мсек`)
-    //     return new Promise(resolve => setTimeout(resolve, delay))
-    // }
 }
-
-export enum TransformType { WHERE, CREATE }

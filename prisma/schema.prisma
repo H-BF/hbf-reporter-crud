@@ -37,21 +37,23 @@ model launch_error {
 }
 
 model assertions {
-  uuid        String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  launch_uuid String           @db.Uuid
-  src_ip      String
-  src_port    String
-  dst_ip      String
-  dst_port    String
-  protocol    protocol
-  from        String
-  to          String
-  from_type   direction_type
-  to_type     direction_type
-  status      assertion_status
-  msg_err     String?
-  test_name   String
-  launch      launch           @relation(fields: [launch_uuid], references: [uuid])
+  uuid         String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  launch_uuid  String           @db.Uuid
+  src_ip       String
+  src_port     String?
+  dst_ip       String
+  dst_port     String?
+  protocol     protocol
+  from         String
+  to           String
+  from_type    direction_type
+  to_type      direction_type
+  status       assertion_status
+  msg_err      String?
+  icmp_type    String?
+  icmp_command String?
+  test_name    String
+  launch       launch           @relation(fields: [launch_uuid], references: [uuid])
 }
 
 enum direction_type {
@@ -68,6 +70,7 @@ enum assertion_status {
 enum protocol {
   tcp
   udp
+  icmp
 }
 
 enum launch_status {
