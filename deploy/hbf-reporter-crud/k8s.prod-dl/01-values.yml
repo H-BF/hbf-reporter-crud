@@ -19,7 +19,7 @@ config:
     entrypoint.sh:
       data: |-
         #!/bin/bash
-        DB_URL=testops-pgsql-cl1-haproxy.testops.svc.k8s.prod-dl:5005
+        DB_URL=testops-pgsql-cl1-haproxy.testops.svc.k8s.prod-dl:5000
         DB_USER=$DB_USER
         DB_PASSWORD=$DB_PASSWORD
         DB_URL=$DB_URL

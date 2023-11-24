@@ -19,7 +19,7 @@ config:
     entrypoint.sh:
       data: |-
         #!/bin/bash
-        DB_URL=swarm-pgsql-cl1-dev-haproxy.swarm.svc.k8s.dldevel:5005
+        DB_URL=swarm-pgsql-cl1-dev-haproxy.swarm.svc.k8s.dldevel:5000
         DB_USER=$DB_USER
         DB_PASSWORD=$DB_PASSWORD
         DB_URL=$DB_URL
