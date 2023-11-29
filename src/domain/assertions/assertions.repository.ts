@@ -25,9 +25,11 @@ export class AssertionsRepository implements IAssertionsRepository {
         const { count } = await this.prismaService.client.assertions.createMany({
             data: data
         })
+        this.prismaService.disconnect()
         return count
     }
 
+    @retry()
     async getAssertionsWhere(
         assertion: Assertions,
         offset?: number,
@@ -41,6 +43,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         })
     }
 
+    @retry()
     async countAllRowsWhere(assertion: Assertions): Promise<number> {
         let where: any = this.transform(assertion)
         return await this.prismaService.client.assertions.count({
