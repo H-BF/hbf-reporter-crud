@@ -37,6 +37,7 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
+    @retry()
     async getByUuid(uuid: string): Promise<launch | null> {
         return await this.prismaService.client.launch.findFirst({
             where: {
@@ -45,6 +46,7 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
+    @retry()
     async getLaunchsWhere(
         launch: Launch,
         offset?: number,
@@ -62,6 +64,7 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
+    @retry()
     async countAllRowsWhere(launch: Launch): Promise<number> {
         let where: any = this.transform(launch)
         return await this.prismaService.client.launch.count({

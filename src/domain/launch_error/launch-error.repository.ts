@@ -18,6 +18,7 @@ export class LaunchErrorRepository implements ILaunchErrorRepository {
         })
     }
 
+    @retry()
     async getByLaunchUuid(launchUuid: string): Promise<launch_error | null> {
         return await this.prismaService.client.launch_error.findFirst({
             where: {
@@ -26,6 +27,7 @@ export class LaunchErrorRepository implements ILaunchErrorRepository {
         })
     }
 
+    @retry()
     async getAll(): Promise<launch_error[] | null> {
         return await this.prismaService.client.launch_error.findMany()
     }

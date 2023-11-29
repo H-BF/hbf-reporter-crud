@@ -238,7 +238,7 @@ export const swaggerTemplate = parse({
     },
     "/assertions": {
       "get": {
-        "summary": "Получение данных из launch_error по launchUuid",
+        "summary": "Получение данных из assertion",
         "parameters": [
           {
             "in": "query",
@@ -288,7 +288,8 @@ export const swaggerTemplate = parse({
               "type": "string",
               "enum": [
                 "tcp",
-                "udp"
+                "udp",
+                "icmp"
               ]
             }
           },
@@ -365,6 +366,22 @@ export const swaggerTemplate = parse({
           {
             "in": "query",
             "name": "msgErr",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "icmpType",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "icmpCommand",
             "required": false,
             "schema": {
               "type": "string"
@@ -495,7 +512,8 @@ export const swaggerTemplate = parse({
             "type": "string",
             "enum": [
               "tcp",
-              "udp"
+              "udp",
+              "icmp"
             ]
           },
           "from": {
@@ -531,6 +549,12 @@ export const swaggerTemplate = parse({
           },
           "msg_err": {
             "type": "string"
+          },
+          "icmp_command": {
+            "type": "string"
+          },
+          "icmp_type": {
+              "type": "string"
           }
         }
       },
