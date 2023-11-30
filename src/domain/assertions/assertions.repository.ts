@@ -25,7 +25,6 @@ export class AssertionsRepository implements IAssertionsRepository {
         const { count } = await this.prismaService.client.assertions.createMany({
             data: data
         })
-        this.prismaService.disconnect()
         return count
     }
 
