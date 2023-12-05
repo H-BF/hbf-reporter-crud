@@ -1,6 +1,7 @@
 FROM node:18-alpine as builder
 WORKDIR /usr/src/app
 ADD *.json .
+ADD ./prisma/schema.prisma ./prisma/schema.prisma
 RUN npm ci
 ADD . .
 RUN npm run build
