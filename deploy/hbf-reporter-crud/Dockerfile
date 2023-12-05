@@ -1,11 +1,14 @@
-FROM node:18 as builder
+FROM node:18-alpine as builder
 WORKDIR /usr/src/app
-COPY . .
+ADD *.json .
 RUN npm ci
+ADD . .
 RUN npm run build
 
-FROM node:18
-WORKDIR /usr/src/api_report_crud
-COPY --from=builder /usr/src/app/build .
-COPY --from=builder /usr/src/app/node_modules ./node_modules
-CMD ["node", "index.js"]
+FROM node:18-alpine
+WORKDIR /usr/src/hbf_report_crud
+COPY --from=builder /usr/src/app/build ./build
+ADD *.json .
+ADD ./prisma/schema.prisma ./prisma/schema.prisma
+RUN npm ci --only=production
+CMD ["node", "./build/index.js"]
