@@ -68,6 +68,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         if (assertion.icmpType != undefined) { data.icmp_type = assertion.icmpType }
         if (assertion.icmpCommand != undefined) { data.icmp_command = assertion.icmpCommand } 
         if (assertion.msgErr != undefined) { data.msg_err = assertion.msgErr }
+        if (assertion.traffic != undefined) { data.traffic = assertion.traffic }
         return data
     }
 }
