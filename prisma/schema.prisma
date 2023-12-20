@@ -53,6 +53,7 @@ model assertions {
   icmp_type    String?
   icmp_command String?
   test_name    String
+  traffic      traffic          @default(unknown)         
   launch       launch           @relation(fields: [launch_uuid], references: [uuid])
 }
 
@@ -78,4 +79,10 @@ enum launch_status {
   in_process
   finish
   error
+}
+
+enum traffic {
+  ingress
+  egress
+  unknown
 }

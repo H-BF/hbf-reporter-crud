@@ -386,6 +386,19 @@ export const swaggerTemplate = parse({
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "traffic",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ingress",
+                "egress",
+                "unknown"
+              ]
+            }
           }
         ],
         "responses": {
@@ -555,6 +568,14 @@ export const swaggerTemplate = parse({
           },
           "icmp_type": {
               "type": "string"
+          },
+          "traffic": {
+            "type": "string",
+            "enum": [
+              "ingress",
+              "egress",
+              "unknown"
+            ]
           }
         }
       },
