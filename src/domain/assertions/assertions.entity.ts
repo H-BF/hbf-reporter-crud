@@ -1,4 +1,4 @@
-import { direction_type, assertion_status, protocol } from "@prisma/client"
+import { direction_type, assertion_status, protocol, traffic } from "@prisma/client"
 
 export interface IAssertions {
     launchUUID?: string
@@ -16,6 +16,7 @@ export interface IAssertions {
     icmpType?: string
     icmpCommand?: string
     testName?: string
+    traffic?: traffic
 }
 
 export class Assertions {
@@ -35,6 +36,7 @@ export class Assertions {
     private _icmpType?: string
     private _icmpCommand?: string
     private _testName?: string
+    private _traffic?: traffic
 
     constructor(data: IAssertions) {
         this._launchUuid = data.launchUUID
@@ -52,6 +54,7 @@ export class Assertions {
         this._icmpType = data.icmpType
         this._icmpCommand = data.icmpCommand
         this._testName = data.testName
+        this._traffic = data.traffic
     }
 
     public get launchUuid(): string | undefined {
@@ -171,5 +174,13 @@ export class Assertions {
 
     public set testName(testName: string) {
         this._testName = testName
+    }
+
+    public get traffic(): traffic | undefined {
+        return this._traffic
+    }
+
+    public set traffic(traffic: traffic) {
+        this._traffic = traffic
     }
 }
