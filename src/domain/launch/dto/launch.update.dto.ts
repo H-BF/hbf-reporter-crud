@@ -1,4 +1,4 @@
-import { IsIn, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsIn, IsNumber, IsOptional, IsUUID } from 'class-validator';
 import { launch_status } from "@prisma/client"
 
 export class LaunchUpdateDto {
@@ -17,7 +17,6 @@ export class LaunchUpdateDto {
     @IsOptional()
     @IsNumber()
     duration?: number
-
 
     @IsOptional()
     @IsIn(Object.keys(launch_status))
