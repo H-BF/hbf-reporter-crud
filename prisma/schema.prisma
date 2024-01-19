@@ -16,17 +16,17 @@ model launch {
   pipeline     Int
   job          Int
   src_branch   String
-  dst_branch   String
   commit       String
   fail_count   Int?
   pass_count   Int?
   duration     Int?
-  hbf_tag      String
+  tag          String
   status       launch_status @default(create)
+  service_name String
   assertions   assertions[]
   launch_error launch_error?
 
-  @@unique([pipeline, job])
+  @@unique([pipeline, job, service_name])
 }
 
 model launch_error {
@@ -53,7 +53,7 @@ model assertions {
   icmp_type    String?
   icmp_command String?
   test_name    String
-  traffic      traffic          @default(unknown)         
+  traffic      traffic          @default(unknown)
   launch       launch           @relation(fields: [launch_uuid], references: [uuid])
 }
 
