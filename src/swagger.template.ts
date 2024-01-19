@@ -91,14 +91,6 @@ export const swaggerTemplate = parse({
           },
           {
             "in": "query",
-            "name": "dstBranch",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
             "name": "commit",
             "required": false,
             "schema": {
@@ -107,7 +99,7 @@ export const swaggerTemplate = parse({
           },
           {
             "in": "query",
-            "name": "hbfTag",
+            "name": "tag",
             "required": false,
             "schema": {
               "type": "string"
@@ -141,6 +133,14 @@ export const swaggerTemplate = parse({
                 "finish",
                 "error"
               ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "serviceName",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -457,9 +457,6 @@ export const swaggerTemplate = parse({
           "src_branch": {
             "type": "string"
           },
-          "dst_branch": {
-            "type": "string"
-          },
           "commit": {
             "type": "string"
           },
@@ -472,7 +469,7 @@ export const swaggerTemplate = parse({
           "duration": {
             "type": "number"
           },
-          "hbf_tag": {
+          "tag": {
             "type": "string"
           },
           "status": {
@@ -483,6 +480,9 @@ export const swaggerTemplate = parse({
               "finish",
               "error"
             ]
+          },
+          "serviceName": {
+            "type": "string"
           }
         }
       },

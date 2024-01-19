@@ -15,13 +15,13 @@ export class LaunchRepository implements ILaunchRepository {
                 pipeline: Number(launch.pipeline),
                 job: Number(launch.job),
                 src_branch: launch.srcBranch!,
-                dst_branch: launch.dstBranch!,
                 commit: launch.commit!,
                 fail_count: Number(launch.failCount),
                 pass_count: Number(launch.passCount),
                 duration: Number(launch.duration),
-                hbf_tag: launch.hbfTag!,
-                status: launch.status
+                tag: launch.tag!,
+                status: launch.status,
+                service_name: launch.serviceName!
             }
         })
     }
@@ -77,13 +77,13 @@ export class LaunchRepository implements ILaunchRepository {
         if (launch.pipeline != undefined) { result.pipeline = Number(launch.pipeline) }
         if (launch.job != undefined) { result.job = Number(launch.job) }
         if (launch.srcBranch != undefined) { result.src_branch = launch.srcBranch }
-        if (launch.dstBranch != undefined) { result.dst_branch = launch.dstBranch }
         if (launch.commit != undefined) { result.commit = launch.commit }
         if (launch.failCount != undefined) { result.fail_count = Number(launch.failCount) }
         if (launch.passCount != undefined) { result.pass_count = Number(launch.passCount) }
         if (launch.duration != undefined) { result.duration = Number(launch.duration) }
-        if (launch.hbfTag != undefined) { result.hbf_tag = launch.hbfTag }
+        if (launch.tag != undefined) { result.hbf_tag = launch.tag }
         if (launch.status != undefined) { result.status = launch.status }
+        if (launch.serviceName) { result.service_name = launch.serviceName }
         return result 
     }
 }
