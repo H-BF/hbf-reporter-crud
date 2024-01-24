@@ -81,7 +81,7 @@ export class LaunchRepository implements ILaunchRepository {
         if (launch.failCount != undefined) { result.fail_count = Number(launch.failCount) }
         if (launch.passCount != undefined) { result.pass_count = Number(launch.passCount) }
         if (launch.duration != undefined) { result.duration = Number(launch.duration) }
-        if (launch.tag != undefined) { result.hbf_tag = launch.tag }
+        if (launch.tag != undefined) { result.tag = launch.tag }
         if (launch.status != undefined) { result.status = launch.status }
         if (launch.serviceName) { result.service_name = launch.serviceName }
         return result 
